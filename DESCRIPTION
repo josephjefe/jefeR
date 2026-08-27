@@ -1,0 +1,32 @@
+Package: jefeR
+Type: Package
+Title: Personal Utilities for Football Analysis and Data Visualization
+Version: 0.1.0
+Authors@R: 
+    person(
+      given = "Joseph",
+      family = "Hefner",
+      role = c("aut", "cre"),
+      email = "hefnerjoseph87@gmail.com"
+    )
+Description: 
+    A collection of personal helper functions for NFL data analysis,
+    visualization, and table formatting. Includes tools for cleaning
+    position data, applying consistent ggplot2 and gt styling, and
+    exporting publication-ready graphics.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Imports: 
+    cowplot,
+    dplyr,
+    ggpath,
+    ggplot2,
+    glue,
+    gt,
+    magick,
+    showtext,
+    stringr,
+    sysfonts,
+    tibble
