@@ -32,5 +32,8 @@ usethis::use_package("glue")
 devtools::document()
 devtools::install()
 
-# Use this to push the package to GitHub:
+# Publish to Github Initially----
+
+# Only run this the very first time!
+usethis::use_git()
 usethis::use_github()
