@@ -49,28 +49,41 @@ gtsave_with_border <- function(
   if (missing(filename)) {
     stop("`filename` must be provided.", call. = FALSE)
   }
-
   if (!requireNamespace("magick", quietly = TRUE)) {
     stop(
-      "Package 'magick' is required for this function. Please install it with: install.packages('magick')",
+      "Package 'magick' is required for this function. ",
+      "Please install it with: install.packages('magick')",
       call. = FALSE
     )
   }
 
   temp_ext <- paste0(".", tools::file_ext(filename))
-  temp_path <- tempfile(pattern = "gt_", tmpdir = path, fileext = temp_ext)
+  temp_path <- tempfile(
+    pattern = "gt_",
+    tmpdir = path,
+    fileext = temp_ext
+  )
   temp_filename <- basename(temp_path)
   final_path <- file.path(path, filename)
 
-  gt::gtsave(
-    gt_object,
+  gtsave_args <- list(
+    data = gt_object,
     path = path,
     filename = temp_filename,
-    expand = 0,
-    vwidth = vwidth,
-    vheight = vheight,
-    ...
+    expand = 0
   )
+
+  if (!is.null(vwidth)) {
+    gtsave_args$vwidth <- vwidth
+  }
+
+  if (!is.null(vheight)) {
+    gtsave_args$vheight <- vheight
+  }
+
+  gtsave_args <- c(gtsave_args, list(...))
+
+  do.call(gt::gtsave, gtsave_args)
 
   img <- magick::image_read(temp_path)
 
