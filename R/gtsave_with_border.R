@@ -34,21 +34,19 @@
 #' }
 #'
 #' @export
-``
-`r
 gtsave_with_border <- function(
-    gt_object,
-    path = ".",
-    filename,
-    background_color = "#F8F9FA",
-    border_color = "#DADCE0",
-    border_size = 1,
-    expand = 30,
-    vwidth = NULL,
-    vheight = NULL,
-    attempts = 3,
-    wait_seconds = 0.5,
-    ...
+  gt_object,
+  path = ".",
+  filename,
+  background_color = "#F8F9FA",
+  border_color = "#DADCE0",
+  border_size = 1,
+  expand = 30,
+  vwidth = NULL,
+  vheight = NULL,
+  attempts = 3,
+  wait_seconds = 0.5,
+  ...
 ) {
   if (missing(filename)) {
     stop(
@@ -142,7 +140,7 @@ filename
 
       while (
         !file.exists(temp_path) &&
-        wait_time < 10
+          wait_time < 10
       ) {
         Sys.sleep(0.1)
         wait_time <- wait_time + 0.1
@@ -151,7 +149,7 @@ filename
 
     if (
       gtsave_success &&
-      file.exists(temp_path)
+        file.exists(temp_path)
     ) {
       break
     }
@@ -169,7 +167,7 @@ filename
 
   if (
     !gtsave_success ||
-    !file.exists(temp_path)
+      !file.exists(temp_path)
   ) {
     stop(
       "gtsave() failed after ",
@@ -214,5 +212,3 @@ filename
 
   invisible(final_path)
 }
-`
-``
