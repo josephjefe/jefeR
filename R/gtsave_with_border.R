@@ -47,7 +47,10 @@ gtsave_with_border <- function(
   ...
 ) {
   if (missing(filename)) {
-    stop("`filename` must be provided.", call. = FALSE)
+    stop(
+      "`filename` must be provided.",
+      call. = FALSE
+    )
   }
   if (!requireNamespace("magick", quietly = TRUE)) {
     stop(
@@ -65,6 +68,13 @@ gtsave_with_border <- function(
   )
   temp_filename <- basename(temp_path)
   final_path <- file.path(path, filename)
+
+  on.exit(
+    if (file.exists(temp_path)) {
+      file.remove(temp_path)
+    },
+    add = TRUE
+  )
 
   gtsave_args <- list(
     data = gt_object,
@@ -85,7 +95,22 @@ gtsave_with_border <- function(
 
   do.call(gt::gtsave, gtsave_args)
 
+  wait_time <- 0
+  while (!file.exists(temp_path) && wait_time < 10) {
+    Sys.sleep(0.1)
+    wait_time <- wait_time + 0.1
+  }
+
+  if (!file.exists(temp_path)) {
+    stop(
+      "gtsave() did not create the expected temporary image: ",
+      temp_path,
+      call. = FALSE
+    )
+  }
+
   img <- magick::image_read(temp_path)
+  img <- magick::image_trim(img)
 
   if (expand > 0) {
     img <- magick::image_border(
@@ -103,11 +128,10 @@ gtsave_with_border <- function(
     )
   }
 
-  magick::image_write(img, final_path)
-
-  if (file.exists(temp_path)) {
-    file.remove(temp_path)
-  }
+  magick::image_write(
+    img,
+    final_path
+  )
 
   invisible(final_path)
 }
