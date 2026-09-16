@@ -1,7 +1,7 @@
 Package: jefeR
 Type: Package
 Title: Personal Utilities for Football Analysis and Data Visualization
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     person(
       given = "Joseph",
